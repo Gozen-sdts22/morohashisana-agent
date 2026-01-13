@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>諸橋沙夏情報収集システム</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header class="header">
+            <h1>諸橋沙夏情報収集システム</h1>
+        </header>
+
+        <!-- 実行セクション -->
+        <section class="execution-section">
+            <button id="executeBtn" class="execute-btn">情報を収集する</button>
+            <div id="executionStatus" class="execution-status"></div>
+            <div id="lastExecution" class="last-execution"></div>
+        </section>
+
+        <!-- フィルターセクション -->
+        <section class="filter-section">
+            <h2>フィルター</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="periodFilter">期間:</label>
+                    <select id="periodFilter">
+                        <option value="24h">過去24時間</option>
+                        <option value="7d" selected>過去7日</option>
+                        <option value="30d">過去30日</option>
+                        <option value="all">全期間</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="importanceFilter">重要度:</label>
+                    <select id="importanceFilter">
+                        <option value="all" selected>全て</option>
+                        <option value="high">高のみ</option>
+                        <option value="medium_up">中以上</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="categoryFilter">カテゴリ:</label>
+                    <select id="categoryFilter">
+                        <option value="all" selected>全て</option>
+                        <!-- カテゴリはJavaScriptで動的に読み込み -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="keywordFilter">検索:</label>
+                    <input type="text" id="keywordFilter" placeholder="キーワードで検索">
+                </div>
+
+                <button id="applyFilterBtn" class="apply-filter-btn">フィルター適用</button>
+            </div>
+        </section>
+
+        <!-- 情報一覧セクション -->
+        <section class="items-section">
+            <div id="itemsContainer" class="items-container">
+                <!-- アイテムはJavaScriptで動的に読み込み -->
+            </div>
+
+            <div class="pagination">
+                <div id="itemCount" class="item-count"></div>
+                <button id="loadMoreBtn" class="load-more-btn" style="display: none;">もっと見る</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

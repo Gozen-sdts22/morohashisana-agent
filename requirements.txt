@@ -1,0 +1,27 @@
+# Web Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+
+# Database
+SQLAlchemy==2.0.23
+psycopg2-binary==2.9.9
+
+# Web Scraping
+beautifulsoup4==4.12.2
+requests==2.31.0
+lxml==4.9.3
+
+# Twitter/X Scraping
+snscrape==0.7.0.20230622
+
+# Claude API
+anthropic==0.18.1
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Scheduling (for future use)
+APScheduler==3.10.4
+
+# Utilities
+pytz==2023.3
