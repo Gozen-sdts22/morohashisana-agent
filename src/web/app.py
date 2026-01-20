@@ -30,7 +30,7 @@ def create_app():
     CORS(app)
 
     # APIルートを登録
-    from .api import api_bp
+    from src.web.api import api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
 
     # メインページ

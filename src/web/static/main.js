@@ -9,6 +9,7 @@ let currentFilters = {
     keyword: ''
 };
 let hasNextPage = false;
+let wasRunning = false; // 前回の実行状態を記憶して完了を検知する
 
 // ページ読み込み時の初期化
 document.addEventListener('DOMContentLoaded', function() {
@@ -221,6 +222,7 @@ async function executeCollection() {
     const statusDiv = document.getElementById('executionStatus');
 
     btn.disabled = true;
+    wasRunning = true; // 実行開始を記録（完了時にリロードするため）
     statusDiv.textContent = '情報収集を開始しています...';
 
     try {
@@ -257,6 +259,13 @@ async function checkExecutionStatus() {
         } else {
             btn.disabled = false;
             statusDiv.textContent = '';
+
+            // 直前まで実行中だった場合のみ、完了後にリストと最終実行情報をリロード
+            if (wasRunning) {
+                wasRunning = false;
+                loadItems();          // 最新データを取得
+                loadLastExecution();  // 最終実行情報を更新
+            }
         }
     } catch (error) {
         console.error('ステータスチェックエラー:', error);

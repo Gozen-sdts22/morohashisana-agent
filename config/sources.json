@@ -2,7 +2,7 @@
   "twitter": {
     "personal_account": "@dummy_account",
     "official_accounts": ["@dummy_official1", "@dummy_official2"],
-    "hashtags": ["#さなのいす", "諸橋沙夏"],
+    "hashtags": ["#さなぼいす", "諸橋沙夏"],
     "engagement_threshold": {
       "likes": 10000,
       "views": 100000

@@ -26,7 +26,8 @@ def main():
         # 接続テスト
         print("\n[1/2] データベース接続テスト中...")
         if not db_manager.test_connection():
-            print("\n✗ データベース接続に失敗しました")
+            # Windows の一部環境で文字コードエラーにならないよう、特殊記号を避ける
+            print("\n[ERROR] データベース接続に失敗しました")
             print("環境変数(.env)の設定を確認してください")
             return 1
 
@@ -35,13 +36,13 @@ def main():
         db_manager.create_tables()
 
         print("\n" + "=" * 60)
-        print("✓ データベース初期化が完了しました")
+        print("[OK] データベース初期化が完了しました")
         print("=" * 60)
 
         return 0
 
     except Exception as e:
-        print(f"\n✗ エラーが発生しました: {e}")
+        print(f"\n[ERROR] エラーが発生しました: {e}")
         import traceback
         traceback.print_exc()
         return 1

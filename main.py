@@ -218,6 +218,17 @@ class NatsuAgentExecutor:
 
         try:
             for item in items:
+                # published_at を datetime オブジェクトに変換（文字列の場合）
+                published_at = item.get('published_at')
+                if isinstance(published_at, str):
+                    try:
+                        # ISO 8601 文字列を datetime に変換
+                        published_at = datetime.fromisoformat(published_at)
+                    except ValueError:
+                        # 変換できない場合は現在時刻で代替
+                        published_at = datetime.now(pytz.timezone('Asia/Tokyo'))
+                item['published_at'] = published_at
+
                 # URLで既存チェック
                 existing = session.query(Item).filter_by(url=item['url']).first()
                 if existing:
@@ -314,12 +325,12 @@ def main():
         # 結果を表示
         print("\n" + "=" * 60)
         if result['status'] == 'success':
-            print("✓ 実行成功")
+            print("[OK] 実行成功")
             print(f"実行ID: {result['execution_id']}")
             print(f"収集: {result.get('total_collected', 0)} 件")
             print(f"保存: {result.get('total_saved', 0)} 件")
         else:
-            print("✗ 実行失敗")
+            print("[ERROR] 実行失敗")
             print(f"エラー: {result.get('error', 'Unknown error')}")
         print("=" * 60)
 

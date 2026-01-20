@@ -4,7 +4,7 @@ Handles database connections for both SQLite (development) and PostgreSQL (produ
 """
 import os
 from typing import Optional
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 from dotenv import load_dotenv
@@ -27,7 +27,8 @@ class DatabaseManager:
         self.SessionLocal = sessionmaker(
             autocommit=False,
             autoflush=False,
-            bind=self.engine
+            bind=self.engine,
+            expire_on_commit=False  # コミット後も属性を保持し、Detachedエラーを避ける
         )
 
     def _create_engine(self):
@@ -110,11 +111,13 @@ class DatabaseManager:
         """
         try:
             with self.engine.connect() as conn:
-                conn.execute("SELECT 1")
-            print(f"✓ データベース接続成功（{self.db_type}）")
+                # SQLAlchemy 2.x では text() を使って文字列クエリを実行する
+                conn.execute(text("SELECT 1"))
+            # Windows コンソールの文字コード環境でも問題が出ないよう、特殊記号は使わない
+            print(f"[OK] データベース接続成功（{self.db_type}）")
             return True
         except Exception as e:
-            print(f"✗ データベース接続失敗: {e}")
+            print(f"[ERROR] データベース接続失敗: {e}")
             return False
 
     def close(self):
